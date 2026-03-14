@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ instructor.name }}{% endblock %}
+{% block nav_instructor %}active{% endblock %}
+
+{% block content %}
+<a class="back-link" href="/instructor/">← Back to Instructors</a>
+
+<div class="detail-box">
+    <h2>{{ instructor.name }}</h2>
+    <div class="info-row"><span class="label">Email:</span> {{ instructor.email }}</div>
+    <div class="info-row"><span class="label">Course:</span> {{ instructor.courses.name }} <span class="badge">{{ instructor.courses.code }}</span></div>
+</div>
+
+<div class="section-title">
+    📖 Course Details
+</div>
+<div class="detail-box">
+    <h2>{{ instructor.courses.name }}</h2>
+    <div class="info-row"><span class="label">Code:</span> {{ instructor.courses.code }}</div>
+
+    <div class="section-title">Enrolled Students <span class="badge">{{ instructor.courses.students.count }}</span></div>
+
+    {% if instructor.courses.students.all %}
+    <table>
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in instructor.courses.students.all %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td><a href="/students/{{ student.id }}/">{{ student.name }}</a></td>
+                <td>{{ student.age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="empty">No students enrolled in this course.</p>
+    {% endif %}
+</div>
+{% endblock %}

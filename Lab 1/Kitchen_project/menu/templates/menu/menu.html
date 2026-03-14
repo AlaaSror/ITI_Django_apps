@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ restaurant_name }}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #222;
+        }
+
+        h1 {
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 24px;
+            display: flex;
+            gap: 8px;
+        }
+
+        input, select, button {
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #222;
+            color: white;
+            border-color: #222;
+            cursor: pointer;
+        }
+
+        .order {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order h2 {
+            font-size: 1rem;
+            margin: 0 0 2px 0;
+        }
+
+        .order small {
+            color: #888;
+        }
+
+        .order .price {
+            font-weight: bold;
+            margin: 0 16px;
+        }
+
+        .available   { color: green; }
+        .unavailable { color: red;   }
+    </style>
+</head>
+<body>
+    <h1>{{ restaurant_name }} 🍽️</h1>
+    <!-- creat the search and filter forms -->
+    <form method="get">
+        <input type="text" name="search" placeholder="Search for a dish..." value="{{ search_query }}">
+        <select name = 'category'>
+            <option value="">All Categories</option>
+            <option value="Main"  {% if selected_category == "Main"  %}selected{% endif %}>Main</option>
+            <option value="Appetizer"  {% if selected_category == "Appetizer"  %}selected{% endif %}>Appetizer</option>
+            <option value="Dessert"  {% if selected_category == "Dessert"  %}selected{% endif %}>Dessert</option>
+            <option value="Drinks"  {% if selected_category == "Drinks"  %}selected{% endif %}>Drinks</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
+    {%for item in menu_items %}
+        <div class="order">
+            <h2>{{ item.name }}</h2>
+            <p>Price: ${{ item.price }}</p>
+            <p>Category: {{ item.category }}</p>
+            {% if item.available %}
+                <p>Available</p>
+            {% else %}
+                <p>Not Available</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No items available.</p>
+    {% endfor %}
+</body>
+</html>

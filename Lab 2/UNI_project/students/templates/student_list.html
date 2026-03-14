@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Students{% endblock %}
+{% block nav_students %}active{% endblock %}
+
+{% block content %}
+<h1>Students</h1>
+
+<div class="cards">
+    {% for student in students %}
+    <div class="card">
+        <h2>{{ student.name }}</h2>
+        <p>🪪 ID: {{ student.id }}</p>
+        <p>🎂 Age: {{ student.age }}</p>
+        <p>📚 {{ student.courses.count }} course(s)</p>
+        <a href="/students/{{ student.id }}/">View Details</a>
+    </div>
+    {% empty %}
+    <p class="empty">No students found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

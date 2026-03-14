@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Courses{% endblock %}
+{% block nav_courses %}active{% endblock %}
+
+{% block content %}
+<h1>Courses</h1>
+
+<div class="cards">
+    {% for course in courses %}
+    <div class="card">
+        <h2>{{ course.name }}</h2>
+        <p>🔖 Code: {{ course.code }}</p>
+        {% if course.instructors %}
+        <p>👨‍🏫 {{ course.instructors.name }}</p>
+        {% else %}
+        <p>👨‍🏫 No instructor assigned</p>
+        {% endif %}
+        <p>👥 {{ course.students.count }} student(s)</p>
+        <a href="/courses/{{ course.id }}/">View Details</a>
+    </div>
+    {% empty %}
+    <p class="empty">No courses found.</p>
+    {% endfor %}
+</div>
+{% endblock %}
